@@ -1,7 +1,11 @@
 import telebot
+import time
 
 bot = telebot.TeleBot("781020407:AAGieeeecXl0hoscL3QWCGnXkD9FielXwG0")
 owner = 458619004
+
+def is_recent(m):
+    return (time.time() - m.date) < 3600
 
 order = {
     "armor":     ["r06 1", "k06 3", "33 15", "31 12", "23 9", "16 5", "28 3", "15 3"],
@@ -109,20 +113,22 @@ recipes_weapon = {"champoin sword":champion_sword, "trident":trident, "hunter_bo
 
 @bot.message_handler(commands=['fwa'])
 def fwa(m):
-    item = m.text.split(' ').lower()
-    for element in recipes_armor[item[1]][item[2]]:
-        bot.send_message(m.chat.id, "/g_receive " + element)
+    if is_recent(m):
+        item = m.text.split(' ').lower()
+        for element in recipes_armor[item[1]][item[2]]:
+            bot.send_message(m.chat.id, "/g_receive " + element)
 
 
 @bot.message_handler(commands=['fww'])
 def fww(m):
-    item = m.text.split(' ').lower()
-    if item[2]:
-        for element in recipes_weapon[item[1] + " " + item[2]]:
-            bot.send_message(m.chat.id, "/g_receive " + element)
-    else:
-        for element in recipes_weapon[item[1]]:
-            bot.send_message(m.chat.id, "/g_receive " + element)
+    if is_recent(m):
+        item = m.text.split(' ').lower()
+        if item[2]:
+            for element in recipes_weapon[item[1] + " " + item[2]]:
+                bot.send_message(m.chat.id, "/g_receive " + element)
+        else:
+            for element in recipes_weapon[item[1]]:
+                bot.send_message(m.chat.id, "/g_receive " + element)
 
 @bot.message_handler(content_types=['text'])
 def sdfs(m):
