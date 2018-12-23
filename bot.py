@@ -122,7 +122,7 @@ def fwa(m):
 @bot.message_handler(commands=['fww'])
 def fww(m):
     if is_recent(m):
-        item = m.text.split(' ').lower()
+        item = m.text.lower().split(' ')
         if item[2]:
             for element in recipes_weapon[item[1] + " " + item[2]]:
                 bot.send_message(m.chat.id, "/g_receive " + element)
@@ -133,7 +133,7 @@ def fww(m):
 @bot.message_handler(content_types=['text'])
 def sdfs(m):
     bot.send_message(m.chat.id, m.text)
-    item = u'' + m.text.split(' ').lower()
+    item = u'' + m.text.lower().split(' ')
     bot.send_message(m.chat.id, item)
 
 def main():
