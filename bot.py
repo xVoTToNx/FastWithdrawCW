@@ -109,20 +109,26 @@ recipes_weapon = {"champoin sword":champion_sword, "trident":trident, "hunter_bo
 
 @bot.message_handler(commands=['fwa'])
 def fwa(m):
-    item = u'' + m.text.split(' ').lower()
+    item = m.text.split(' ').lower()
     for element in recipes_armor[item[1]][item[2]]:
         bot.send_message(m.chat.id, "/g_receive " + element)
 
 
 @bot.message_handler(commands=['fww'])
 def fww(m):
-    item = u'' + m.text.split(' ').lower()
+    item = m.text.split(' ').lower()
     if item[2]:
         for element in recipes_weapon[item[1] + " " + item[2]]:
             bot.send_message(m.chat.id, "/g_receive " + element)
     else:
         for element in recipes_weapon[item[1]]:
             bot.send_message(m.chat.id, "/g_receive " + element)
+
+@bot.message_handler(content_types=['text'])
+def sdfs(m):
+    bot.send_message(m.chat.id, m.text)
+    item = u'' + m.text.split(' ').lower()
+    bot.send_message(m.chat.id, item)
 
 def main():
     bot.polling(none_stop=True)
