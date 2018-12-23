@@ -114,7 +114,7 @@ recipes_weapon = {"champoin sword":champion_sword, "trident":trident, "hunter_bo
 @bot.message_handler(commands=['fwa'])
 def fwa(m):
     if is_recent(m):
-        item = m.text.split(' ').lower()
+        item = m.text.lower().split(' ')
         for element in recipes_armor[item[1]][item[2]]:
             bot.send_message(m.chat.id, "/g_receive " + element)
 
