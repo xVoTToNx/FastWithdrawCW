@@ -107,15 +107,15 @@ recipes_weapon = {"champoin sword":champion_sword, "trident":trident, "hunter_bo
                   "skill crusher":skull_crusher, "dragon mace":dragon_mace, "ghost dagger":ghost_dagger,
                   "lion knife":lion_knife}
 
-@bot.message_handler(commands=['fww'])
-def fww(m):
+@bot.message_handler(commands=['fwa'])
+def fwa(m):
     item = u'' + m.text.split(' ').lower()
     for element in recipes_armor[item[1]][item[2]]:
         bot.send_message(m.chat.id, "/g_receive " + element)
 
 
-@bot.message_handler(commands=['fwa'])
-def fwa(m):
+@bot.message_handler(commands=['fww'])
+def fww(m):
     item = u'' + m.text.split(' ').lower()
     if item[2]:
         for element in recipes_weapon[item[1] + " " + item[2]]:
