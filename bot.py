@@ -4,16 +4,20 @@ from telebot import types
 
 bot = telebot.TeleBot("781020407:AAGieeeecXl0hoscL3QWCGnXkD9FielXwG0")
 owner = 458619004
-
+counter = 0
 
 def is_recent(m):
     return (time.time() - m.date) < 3600
 
 def fwa(m):
     if is_recent(m):
-        item = m.text.lower().split(' ')
-        for element in recipes_armor[item[1]][item[2]]:
-            bot.send_message(m.chat.id, "/g_receive " + element)
+        try:
+            item = m.text.lower().split(' ')
+            for element in recipes_armor[item[1]][item[2]]:
+                bot.send_message(m.chat.id, "/g_receive " + element)
+            counter++
+        except:
+            bot.send_message(m.chat.id, "Wrong item")
 
 def fww(m):
     if is_recent(m):
@@ -22,8 +26,12 @@ def fww(m):
             for element in recipes_weapon[item[1] + " " + item[2]]:
                 bot.send_message(m.chat.id, "/g_receive " + element)
         except:
-            for element in recipes_weapon[item[1]]:
-                bot.send_message(m.chat.id, "/g_receive " + element)
+            try:
+                for element in recipes_weapon[item[1]]:
+                    bot.send_message(m.chat.id, "/g_receive " + element)
+                counter++
+            except:
+                bot.send_message(m.chat.id, "Wrong item")
 
 order = {
     "armor": ["r06 1", "k06 3", "33 15", "31 12", "23 9", "16 5", "28 3", "15 3"],
@@ -311,6 +319,11 @@ def first_mes(call):
 @bot.message_handler(commands=['help'])
 def help(m):
     bot.send_message(m.chat.id, help_information)
+    
+@bot.message_handler(commands=['counter'])
+def count(m):
+    if m.from_user.id == owner:
+        bot.send_message(m.chat.id, counter)
 
 
 @bot.message_handler(commands=['fwa'])
