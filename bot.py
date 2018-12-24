@@ -296,17 +296,17 @@ def first_mes(call):
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=call.message.text,
                               reply_markup=keyboard)
 
-    elif call.data.split(" ")[1] == "final":
-        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=call.message.text + " " + call.data.split(" ")[0])
-        call.message.text += " " + call.data.split(" ")[0]
-        fwa(call.message)
-
     elif call.data.split(":")[1] == "final":
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text=call.message.text + " " + call.data.split(":")[0])
         call.message.text += " " + call.data.split(":")[0]
         fww(call.message)
+        
+    elif call.data.split(" ")[1] == "final":
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                              text=call.message.text + " " + call.data.split(" ")[0])
+        call.message.text += " " + call.data.split(" ")[0]
+        fwa(call.message)
 
 @bot.message_handler(commands=['help'])
 def help(m):
