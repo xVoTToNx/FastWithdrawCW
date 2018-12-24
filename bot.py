@@ -18,10 +18,10 @@ def fwa(m):
 def fww(m):
     if is_recent(m):
         item = m.text.lower().split(' ')
-        if item[2]:
+        try:
             for element in recipes_weapon[item[1] + " " + item[2]]:
                 bot.send_message(m.chat.id, "/g_receive " + element)
-        else:
+        except:
             for element in recipes_weapon[item[1]]:
                 bot.send_message(m.chat.id, "/g_receive " + element)
 
