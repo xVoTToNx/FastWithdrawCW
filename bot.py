@@ -15,6 +15,7 @@ def fwa(m):
             item = m.text.lower().split(' ')
             for element in recipes_armor[item[1]][item[2]]:
                 bot.send_message(m.chat.id, "/g_receive " + element)
+            global counter
             counter = counter + 1
         except:
             bot.send_message(m.chat.id, "Wrong item")
@@ -29,6 +30,7 @@ def fww(m):
             try:
                 for element in recipes_weapon[item[1]]:
                     bot.send_message(m.chat.id, "/g_receive " + element)
+                global counter
                 counter = counter + 1
             except:
                 bot.send_message(m.chat.id, "Wrong item")
