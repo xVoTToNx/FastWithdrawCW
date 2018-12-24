@@ -156,6 +156,8 @@ def first_mes(call):
                               text="/fwa", reply_markup=keyboard)
 
     elif call.data == "light":
+        if len(call.message.text.split(" ")) == 2:
+            call.message.text = "/fwa"
         keyboard = types.InlineKeyboardMarkup()
         b1 = types.InlineKeyboardButton(text="Hunter", callback_data="hunter")
         b2 = types.InlineKeyboardButton(text="Ghost", callback_data="ghost")
@@ -166,6 +168,8 @@ def first_mes(call):
                               text=call.message.text, reply_markup=keyboard)
 
     elif call.data == "hunter" or call.data == "ghost" or call.data == "lion":
+        if len(call.message.text.split(" ")) == 3:
+            call.message.text = "/fwa " + call.message.text.split(" ")[1]
         keyboard = types.InlineKeyboardMarkup()
         b1 = types.InlineKeyboardButton(text="Armor", callback_data="armor final")
         b2 = types.InlineKeyboardButton(text="Helmet", callback_data="helmet final")
@@ -177,6 +181,8 @@ def first_mes(call):
                               text=call.message.text + " " + call.data, reply_markup=keyboard)
 
     elif call.data == "robe":
+        if len(call.message.text.split(" ")) == 2:
+            call.message.text = "/fwa"
         keyboard = types.InlineKeyboardMarkup()
         b1 = types.InlineKeyboardButton(text="Clarity", callback_data="clarity")
         b2 = types.InlineKeyboardButton(text="Demon", callback_data="demon")
@@ -187,6 +193,8 @@ def first_mes(call):
                               text=call.message.text, reply_markup=keyboard)
 
     elif call.data == "clarity" or call.data == "demon" or call.data == "divine":
+        if len(call.message.text.split(" ")) == 3:
+            call.message.text = "/fwa " + call.message.text.split(" ")[1]
         keyboard = types.InlineKeyboardMarkup()
         b1 = types.InlineKeyboardButton(text="Robe", callback_data="robe final")
         b2 = types.InlineKeyboardButton(text="Circlet", callback_data="circlet final")
@@ -198,6 +206,8 @@ def first_mes(call):
                               text=call.message.text + " " + call.data, reply_markup=keyboard)
 
     elif call.data == "heavy":
+        if len(call.message.text.split(" ")) == 2:
+            call.message.text = "/fwa"
         keyboard = types.InlineKeyboardMarkup()
         b1 = types.InlineKeyboardButton(text="Order", callback_data="order")
         b2 = types.InlineKeyboardButton(text="Crusader", callback_data="crusader")
@@ -208,6 +218,8 @@ def first_mes(call):
                               text=call.message.text, reply_markup=keyboard)
 
     elif call.data == "order" or call.data == "crusader" or call.data == "royal":
+        if len(call.message.text.split(" ")) == 3:
+            call.message.text = "/fwa " + call.message.text.split(" ")[1]
         keyboard = types.InlineKeyboardMarkup()
         b1 = types.InlineKeyboardButton(text="Armor", callback_data="armor final")
         b2 = types.InlineKeyboardButton(text="Helmet", callback_data="helmet final")
