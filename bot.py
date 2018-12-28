@@ -9,16 +9,31 @@ counter = 0
 def is_recent(m):
     return (time.time() - m.date) < 3600
 
-def fwa(m):
+def get(m):
     if is_recent(m):
-        try:
+        if m.text.lower().split(' ')[1] in recipes_armor and not(m.text.lower().split(' ')[2] == "knife") \
+        and not(m.text.lower().split(' ')[2] == "dagger"):
+            try:
+                item = m.text.lower().split(' ')
+                for element in recipes_armor[item[1]][item[2]]:
+                    bot.send_message(m.chat.id, "/g_withdraw " + element)
+                global counter
+                counter = counter + 1
+            except:
+                bot.send_message(m.chat.id, "Wrong item")
+        else:
             item = m.text.lower().split(' ')
-            for element in recipes_armor[item[1]][item[2]]:
-                bot.send_message(m.chat.id, "/g_withdraw " + element)
-            global counter
-            counter = counter + 1
-        except:
-            bot.send_message(m.chat.id, "Wrong item")
+                try:
+                    for element in recipes_weapon[item[1] + " " + item[2]]:
+                        bot.send_message(m.chat.id, "/g_withdraw " + element)
+                except:
+                    try:
+                        for element in recipes_weapon[item[1]]:
+                            bot.send_message(m.chat.id, "/g_withdraw " + element)
+                        global counter
+                        counter = counter + 1
+                    except:
+                        bot.send_message(m.chat.id, "Wrong item")
 
 def fww(m):
     if is_recent(m):
@@ -132,7 +147,7 @@ recipes_armor = {"order": order, "hunter": hunter, "clarity": clarity, "crusader
                  "durable": durable, "storm": storm, "blessed": blessed
                  }
 recipes_weapon = {"champoin sword": champion_sword, "trident": trident, "hunter_bow": hunter_bow,
-                  "war hammer": war_hammer, "hunter dagger": hunter_dagger, "thundersould sword": thundersoul_sword,
+                  "war hammer": war_hammer, "hunter dagger": hunter_dagger, "thundersoul sword": thundersoul_sword,
                   "doomblade sword": doomblade_sword, "eclipse": eclipse, "guard's spear": guards_spear,
                   "king's defender": kings_defender, "raging lance": raging_lance, "composite bow": composite_bow,
                   "lightning bow": lightning_bow, "hailstorm bow": hailstorm_bow, "imperial axe": imperial_axe,
@@ -317,13 +332,13 @@ def first_mes(call):
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text=call.message.text + " " + call.data.split(" ")[0])
         call.message.text += " " + call.data.split(" ")[0]
-        fwa(call.message)
+        get(call.message)
         
     elif call.data.split(":")[1] == "final":
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text=call.message.text + " " + call.data.split(":")[0])
         call.message.text += " " + call.data.split(":")[0]
-        fww(call.message)
+        get(call.message)
         
 
 @bot.message_handler(commands=['help_en'])
@@ -342,9 +357,9 @@ def count(m):
         bot.send_message(m.chat.id, counter)
 
 
-@bot.message_handler(commands=['fwa'])
-def com_ar(m):
-    fwa(m)
+@bot.message_handler(commands=['g'])
+def get_fun(m):
+    get(m)
 
 
 @bot.message_handler(commands=['fww'])
