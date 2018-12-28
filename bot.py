@@ -23,17 +23,17 @@ def get(m):
                 bot.send_message(m.chat.id, "Wrong item")
         else:
             item = m.text.lower().split(' ')
+            try:
+                for element in recipes_weapon[item[1] + " " + item[2]]:
+                    bot.send_message(m.chat.id, "/g_withdraw " + element)
+            except:
                 try:
-                    for element in recipes_weapon[item[1] + " " + item[2]]:
+                    for element in recipes_weapon[item[1]]:
                         bot.send_message(m.chat.id, "/g_withdraw " + element)
+                    global counter
+                    counter = counter + 1
                 except:
-                    try:
-                        for element in recipes_weapon[item[1]]:
-                            bot.send_message(m.chat.id, "/g_withdraw " + element)
-                        global counter
-                        counter = counter + 1
-                    except:
-                        bot.send_message(m.chat.id, "Wrong item")
+                    bot.send_message(m.chat.id, "Wrong item")
 
 def fww(m):
     if is_recent(m):
