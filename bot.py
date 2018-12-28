@@ -161,7 +161,7 @@ help_information = "Введите \"/g НАЗВАНИЕ БРОНИ\" или \"/
 
 @bot.message_handler(commands=["fg"])
 def start_button_fg(m):
-    def start_mes(m)
+    start_mes(m)
 
 @bot.callback_query_handler(func=lambda call: True)
 def first_mes(call):
