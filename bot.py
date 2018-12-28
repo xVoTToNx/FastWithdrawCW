@@ -139,12 +139,19 @@ recipes_weapon = {"champoin sword": champion_sword, "trident": trident, "hunter_
                   "skill crusher": skull_crusher, "dragon mace": dragon_mace, "ghost dagger": ghost_dagger,
                   "lion knife": lion_knife}
 
-help_information = "FastWithdraw Bot\nWrite \"/fwa ARMOR NAME\" to get list of /g_withdraw commands for this part of armor. \n\
+help_information_en = "Write \"/fwa ARMOR NAME\" to get list of /g_withdraw commands for this part of armor. \n\
 For example: /fwa royal helmet or /fwa Order Armor . \n\
 Write \"/fww WEAPON NAME\" to get the same for this weapon. \n\
 For example: /fww Eclipse or /fww King's defender .\n\
 Write \"/fastwithdraw\" to easily find what you need for withdrawing.\n\
 ( All shields in armor and dagger in weapons )"
+
+help_information = "Введите \"/fwa НАЗВАНИЕ БРОНИ\", что бы получить список /g_withdraw комманд для этого айтема. \n\
+Например: /fwa royal helmet или /fwa Order Armor . \n\
+Введите \"/fww НАЗВАНИЕ ОРУЖИЯ\", для того же. \n\
+Например: /fww Eclipse или /fww King's defender .\n\
+Введите \"/fastwithdraw\" что бы легко найти нужный вам предмет и автоматически получить список /g_withdraw комманд\n\
+( Все щиты в Броне и даггеры в Оружии )"
 
 @bot.message_handler(commands=["fastwithdraw"])
 def start_mes(m):
@@ -306,21 +313,28 @@ def first_mes(call):
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=call.message.text,
                               reply_markup=keyboard)
 
+    elif call.data.split(" ")[1] == "final":
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                              text=call.message.text + " " + call.data.split(" ")[0])
+        call.message.text += " " + call.data.split(" ")[0]
+        fwa(call.message)
+        
     elif call.data.split(":")[1] == "final":
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text=call.message.text + " " + call.data.split(":")[0])
         call.message.text += " " + call.data.split(":")[0]
         fww(call.message)
         
-    elif call.data.split(" ")[1] == "final":
-        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text=call.message.text + " " + call.data.split(" ")[0])
-        call.message.text += " " + call.data.split(" ")[0]
-        fwa(call.message)
+
+@bot.message_handler(commands=['help_en'])
+def help(m):
+    bot.send_message(m.chat.id, help_information_en)
+    
 
 @bot.message_handler(commands=['help'])
 def help(m):
     bot.send_message(m.chat.id, help_information)
+    
     
 @bot.message_handler(commands=['counter'])
 def count(m):
