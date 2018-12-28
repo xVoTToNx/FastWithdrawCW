@@ -42,7 +42,7 @@ def start_mes(m, flag = True):
     if flag:
         bot.send_message(m.chat.id, "/g", reply_markup=keyboard)
     else:
-        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+        bot.edit_message_text(chat_id=m.chat.id, message_id=m.message_id,
                               text="/g", reply_markup=keyboard)
                     
 order = {
