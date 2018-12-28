@@ -139,11 +139,11 @@ recipes_weapon = {"champoin sword": champion_sword, "trident": trident, "hunter_
                   "skill crusher": skull_crusher, "dragon mace": dragon_mace, "ghost dagger": ghost_dagger,
                   "lion knife": lion_knife}
 
-help_information = "FastWithdraw Bot\nWrite \"/fwa ARMOR NAME\" to get list of /g_receive commands for this part of armor. \n\
+help_information = "FastWithdraw Bot\nWrite \"/fwa ARMOR NAME\" to get list of /g_withdraw commands for this part of armor. \n\
 For example: /fwa royal helmet or /fwa Order Armor . \n\
 Write \"/fww WEAPON NAME\" to get the same for this weapon. \n\
 For example: /fww Eclipse or /fww King's defender .\n\
-Write \"/fastwithdraw\" to easily find what you need for receiving.\n\
+Write \"/fastwithdraw\" to easily find what you need for withdrawing.\n\
 ( All shields in armor and dagger in weapons )"
 
 @bot.message_handler(commands=["fastwithdraw"])
