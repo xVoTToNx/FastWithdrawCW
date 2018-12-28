@@ -30,7 +30,6 @@ def get(m):
                 try:
                     for element in recipes_weapon[item[1]]:
                         bot.send_message(m.chat.id, "/g_withdraw " + element)
-                    global counter
                     counter = counter + 1
                 except:
                     bot.send_message(m.chat.id, "Wrong item")
