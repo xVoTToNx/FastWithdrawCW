@@ -33,22 +33,18 @@ def get(m):
                     counter = counter + 1
                 except:
                     bot.send_message(m.chat.id, "Wrong item")
-
-def fww(m):
-    if is_recent(m):
-        item = m.text.lower().split(' ')
-        try:
-            for element in recipes_weapon[item[1] + " " + item[2]]:
-                bot.send_message(m.chat.id, "/g_withdraw " + element)
-        except:
-            try:
-                for element in recipes_weapon[item[1]]:
-                    bot.send_message(m.chat.id, "/g_withdraw " + element)
-                global counter
-                counter = counter + 1
-            except:
-                bot.send_message(m.chat.id, "Wrong item")
-
+              
+def start_mes(m, flag = True):
+    keyboard = types.InlineKeyboardMarkup()
+    b1 = types.InlineKeyboardButton(text="Armor", callback_data="armor")
+    b2 = types.InlineKeyboardButton(text="Weapon", callback_data="weapon")
+    keyboard.add(b1, b2)
+    if flag:
+        bot.send_message(m.chat.id, "/g", reply_markup=keyboard)
+    else:
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                              text="/g", reply_markup=keyboard)
+                    
 order = {
     "armor": ["r06 1", "k06 3", "33 15", "31 12", "23 9", "16 5", "28 3", "15 3"],
     "helmet": ["r07 1", "k07 3", "33 12", "31 9", "23 7", "16 3", "28 2", "15 1"],
@@ -153,42 +149,37 @@ recipes_weapon = {"champoin sword": champion_sword, "trident": trident, "hunter_
                   "skill crusher": skull_crusher, "dragon mace": dragon_mace, "ghost dagger": ghost_dagger,
                   "lion knife": lion_knife}
 
-help_information_en = "Write \"/fwa ARMOR NAME\" to get list of /g_withdraw commands for this part of armor. \n\
-For example: /fwa royal helmet or /fwa Order Armor . \n\
-Write \"/fww WEAPON NAME\" to get the same for this weapon. \n\
-For example: /fww Eclipse or /fww King's defender .\n\
-Write \"/fastwithdraw\" to easily find what you need for withdrawing.\n\
+help_information_en = "Write \"/g ARMOR NAME\" or \"/g WEAPON NAME\" to get list of /g_withdraw commands for this item.\n\
+For example: /g King's defender or /g Order Armor . \n\
+Write \"/fg\" to easily find what you need for withdrawing.\n\
 ( All shields in armor and dagger in weapons )"
 
-help_information = "Введите \"/fwa НАЗВАНИЕ БРОНИ\", что бы получить список /g_withdraw комманд для этого айтема. \n\
-Например: /fwa royal helmet или /fwa Order Armor . \n\
-Введите \"/fww НАЗВАНИЕ ОРУЖИЯ\", для того же. \n\
-Например: /fww Eclipse или /fww King's defender .\n\
-Введите \"/fastwithdraw\" что бы легко найти нужный вам предмет и автоматически получить список /g_withdraw комманд\n\
+help_information = "Введите \"/g НАЗВАНИЕ БРОНИ\" или \"/g НАЗВАНИЕ ОРУЖИЯ\", что бы получить список /g_withdraw комманд для этого айтема. \n\
+Например: /fwa King's defender или /fwa Order Armor . \n\
+Введите \"/fg\" что бы легко найти нужный вам предмет и автоматически получить список /g_withdraw комманд\n\
 ( Все щиты в Броне и даггеры в Оружии )"
 
-@bot.message_handler(commands=["fastwithdraw"])
-def start_mes(m):
-    keyboard = types.InlineKeyboardMarkup()
-    b1 = types.InlineKeyboardButton(text="Armor", callback_data="armor")
-    b2 = types.InlineKeyboardButton(text="Weapon", callback_data="weapon")
-    keyboard.add(b1, b2)
-    bot.send_message(m.chat.id, "/", reply_markup=keyboard)
+@bot.message_handler(commands=["fg"])
+def start_button_fg(m):
+    def start_mes(m)
 
 @bot.callback_query_handler(func=lambda call: True)
 def first_mes(call):
-    if call.data == "armor":
+    if call.data == "back":
+        start_mes(call.message, False)
+    elif call.data == "armor":
         keyboard = types.InlineKeyboardMarkup()
         b1 = types.InlineKeyboardButton(text="Light", callback_data="light")
         b2 = types.InlineKeyboardButton(text="Robe", callback_data="robe")
         b3 = types.InlineKeyboardButton(text="Heavy", callback_data="heavy")
-        keyboard.add(b1, b2, b3)
+        b4 = types.InlineKeyboardButton(text="Back", callback_data="back")
+        keyboard.add(b1, b2, b3, b4)
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text="/fwa", reply_markup=keyboard)
+                              text="/g", reply_markup=keyboard)
 
     elif call.data == "light":
         if len(call.message.text.split(" ")) == 2:
-            call.message.text = "/fwa"
+            call.message.text = "/g"
         keyboard = types.InlineKeyboardMarkup()
         b1 = types.InlineKeyboardButton(text="Hunter", callback_data="hunter")
         b2 = types.InlineKeyboardButton(text="Ghost", callback_data="ghost")
@@ -200,7 +191,7 @@ def first_mes(call):
 
     elif call.data == "hunter" or call.data == "ghost" or call.data == "lion":
         if len(call.message.text.split(" ")) == 3:
-            call.message.text = "/fwa " + call.message.text.split(" ")[1]
+            call.message.text = "/g " + call.message.text.split(" ")[1]
         keyboard = types.InlineKeyboardMarkup()
         b1 = types.InlineKeyboardButton(text="Armor", callback_data="armor final")
         b2 = types.InlineKeyboardButton(text="Helmet", callback_data="helmet final")
@@ -213,7 +204,7 @@ def first_mes(call):
 
     elif call.data == "robe":
         if len(call.message.text.split(" ")) == 2:
-            call.message.text = "/fwa"
+            call.message.text = "/g"
         keyboard = types.InlineKeyboardMarkup()
         b1 = types.InlineKeyboardButton(text="Clarity", callback_data="clarity")
         b2 = types.InlineKeyboardButton(text="Demon", callback_data="demon")
@@ -225,7 +216,7 @@ def first_mes(call):
 
     elif call.data == "clarity" or call.data == "demon" or call.data == "divine":
         if len(call.message.text.split(" ")) == 3:
-            call.message.text = "/fwa " + call.message.text.split(" ")[1]
+            call.message.text = "/g " + call.message.text.split(" ")[1]
         keyboard = types.InlineKeyboardMarkup()
         b1 = types.InlineKeyboardButton(text="Robe", callback_data="robe final")
         b2 = types.InlineKeyboardButton(text="Circlet", callback_data="circlet final")
@@ -238,7 +229,7 @@ def first_mes(call):
 
     elif call.data == "heavy":
         if len(call.message.text.split(" ")) == 2:
-            call.message.text = "/fwa"
+            call.message.text = "/g"
         keyboard = types.InlineKeyboardMarkup()
         b1 = types.InlineKeyboardButton(text="Order", callback_data="order")
         b2 = types.InlineKeyboardButton(text="Crusader", callback_data="crusader")
@@ -250,7 +241,7 @@ def first_mes(call):
 
     elif call.data == "order" or call.data == "crusader" or call.data == "royal":
         if len(call.message.text.split(" ")) == 3:
-            call.message.text = "/fwa " + call.message.text.split(" ")[1]
+            call.message.text = "/g " + call.message.text.split(" ")[1]
         keyboard = types.InlineKeyboardMarkup()
         b1 = types.InlineKeyboardButton(text="Armor", callback_data="armor final")
         b2 = types.InlineKeyboardButton(text="Helmet", callback_data="helmet final")
@@ -269,9 +260,10 @@ def first_mes(call):
         b3 = types.InlineKeyboardButton(text="Spear", callback_data="spear")
         b4 = types.InlineKeyboardButton(text="Blunt", callback_data="blunt")
         b5 = types.InlineKeyboardButton(text="Daggers", callback_data="dagger")
-        keyboard.add(b1, b2, b3, b4, b5)
+        b6 = types.InlineKeyboardButton(text="Back", callback_data="back")
+        keyboard.add(b1, b2, b3, b4, b5, b6)
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                              text="/fww", reply_markup=keyboard)
+                              text="/g", reply_markup=keyboard)
 
     elif call.data == "sword":
         keyboard = types.InlineKeyboardMarkup()
@@ -359,11 +351,6 @@ def count(m):
 @bot.message_handler(commands=['g'])
 def get_fun(m):
     get(m)
-
-
-@bot.message_handler(commands=['fww'])
-def com_weap(m):
-    fww(m)
 
 
 def main():
